@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - TPQ GRIYA HUFFAZH QUR'AN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root { --primary-green: #009345; --accent-orange: #f36f21; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Background Hero diperbaiki agar terlihat profesional */
+        .hero-section { 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1584281722571-049fa0f96898?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        /* Styling Navigasi Admin */
+        .admin-nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        .admin-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="admin-tools" class="admin-nav d-none">
+        <div class="admin-box">
+            <span class="text-dark fw-bold small d-none d-md-inline">MODE ADMIN:</span>
+            <a href="dashboard.html" class="btn btn-warning btn-sm fw-bold rounded-pill">
+                <i class="bi bi-speedometer2"></i> DASHBOARD
+            </a>
+            <button class="btn btn-danger btn-sm fw-bold rounded-pill" onclick="handleLogout()">
+                <i class="bi bi-box-arrow-right"></i> LOGOUT
+            </button>
+        </div>
+    </div>
+
+    <header class="hero-section">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4 text-uppercase">TPQ GRIYA HUFFAZH QUR'AN</h1>
+            <p class="lead mb-5 fs-4">Membangun Karakter Generasi Qur'ani yang Mandiri dan Berakhlak Mulia</p>
+            
+            <a href="psb.html" class="btn btn-success btn-lg px-5 py-3 shadow-lg fw-bold" style="border-radius: 50px;">
+                <i class="bi bi-pencil-square me-2"></i> DAFTAR SANTRI BARU
+            </a>
+        </div>
+    </header>
+
+    <section class="container my-5 py-5">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 text-center">
+                <img src="logo_tpq.png" class="img-fluid rounded-4 shadow" style="max-width: 350px;" alt="Logo TPQ">
+            </div>
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-3" style="color: var(--primary-green);">Tentang Kami</h2>
+                <p class="text-muted fs-5">TPQ Griya Huffazh Qur'an adalah lembaga pendidikan Al-Qur'an yang fokus pada perbaikan bacaan (Tahsin) dan hafalan (Tahfidz) dengan metode yang menyenangkan bagi anak-anak.</p>
+                <ul class="list-unstyled mt-4 fs-5">
+                    <li class="mb-2">✅ Kurikulum Terstruktur</li>
+                    <li class="mb-2">✅ Pengajar Berpengalaman</li>
+                    <li>✅ Lingkungan Islami & Nyaman</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0 small">© 2018 - TPQ Griya Huffazh Qur'an. Seluruh Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const SUPABASE_URL = 'https://ehkpclyvwawztgvavwka.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVoa3BjbHl2d2F3enRndmF2d2thIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc3Njk0MzEsImV4cCI6MjA4MzM0NTQzMX0.rJhtmy3ekAQRnRsun8f6Soqjfb7sXrck6ofg4MkPXCg';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // FUNGSI CEK SESSION (Bukan checkAuth dashboard)
+        async function checkAdminStatus() {
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                const adminTools = document.getElementById('admin-tools');
+
+                if (session) {
+                    // Jika Admin terdeteksi sedang login, munculkan tombol melayang
+                    adminTools.classList.remove('d-none');
+                    console.log("Status: Admin Aktif");
+                }
+            } catch (err) {
+                console.error("Session Error:", err);
+            }
+        }
+
+        async function handleLogout() {
+            const { error } = await supabaseClient.auth.signOut();
+            if (!error) {
+                window.location.reload();
+            }
+        }
+
+        // Jalankan saat halaman siap
+        document.addEventListener('DOMContentLoaded', checkAdminStatus);
+    </script>
+</body>
+</html>
