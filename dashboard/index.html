@@ -322,7 +322,7 @@
     async function handleLogout() {
         await supabaseClient.auth.signOut();
         // Setelah logout admin diarahkan kembali ke home.html
-        window.location.href = '../';
+        window.location.href = '../login/';
     }
 </script>
 </body>
