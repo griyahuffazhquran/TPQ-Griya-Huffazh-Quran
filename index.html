@@ -120,7 +120,7 @@
         async function handleLogout() {
             const { error } = await supabaseClient.auth.signOut();
             if (!error) {
-                window.location.reload();
+                window.location.href = 'login/';
             }
         }
 
