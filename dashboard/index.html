@@ -143,7 +143,7 @@
         const { data: { session } } = await supabaseClient.auth.getSession();
         if (!session) {
             // Jika tidak login, kembalikan ke home.html agar tidak bingung
-            window.location.href = '../login/';
+            window.location.href = '../';
         } else {
             document.getElementById('loading-overlay').style.display = 'none';
             fetchData();
