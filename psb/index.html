@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran - TPQ GRIYA HUFFAZH QUR'AN</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.css" rel="stylesheet">
+    
+    <style>
+        :root { --primary-green: #009345; --accent-orange: #de5403; }
+        body { background-color: #f4f7f6; font-family: 'Segoe UI', sans-serif; }
+        .form-header { background: var(--primary-green); color: white; padding: 25px; border-radius: 15px 15px 0 0; }
+        .card-psb { border: none; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        .step-title { 
+            background: #e9ecef; 
+            padding: 12px 15px; 
+            border-left: 5px solid var(--primary-green); 
+            font-weight: bold; 
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        /* TOMBOL LANJUT (HIJAU) */
+        .btn-next { 
+            background-color: var(--primary-green) !important; 
+            color: white !important; 
+            border: none; 
+            padding: 12px 30px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+        }
+
+        .btn-next:hover, .btn-next:focus, .btn-next:active {
+            background-color: #004721 !important; /* Hijau yang lebih gelap saat hover */
+            color: white !important; /* Memastikan teks TIDAK jadi hitam/putih */
+            box-shadow: 0 5px 15px rgba(0, 147, 69, 0.3);
+        }
+
+        /* TOMBOL KEMBALI (ABU-ABU) */
+        .btn-prev { 
+            background-color: #6c757d !important; 
+            color: white !important; 
+            border: none; 
+            padding: 12px 30px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+        }
+
+        .btn-prev:hover {
+            background-color: #545b62 !important;
+            color: white !important;
+        }
+
+        /* TOMBOL KIRIM AKHIR (ORANYE) */
+        .btn-kirim { 
+            background-color: var(--accent-orange) !important; 
+            color: white !important; 
+            border: none; 
+            padding: 12px 30px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+        }
+
+        .btn-kirim:hover, .btn-kirim:focus, .btn-kirim:active {
+            background-color: #903200 !important; /* Oranye gelap saat hover */
+            color: white !important;
+            box-shadow: 0 5px 15px rgba(243, 111, 33, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <a href="../index.html" class="text-decoration-none text-muted fw-bold">← KEMBALI KE BERANDA</a>
+            </div>
+
+            <div class="card card-psb">
+                <div class="form-header text-center">
+                    <h3 class="fw-bold mb-1">FORMULIR PENDAFTARAN</h3>
+                    <p class="mb-0 small text-uppercase">TPQ GRIYA HUFFAZH QUR'AN</p>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form id="pendaftaranForm" novalidate>
+                        
+                        <div class="step-pane" id="step1">
+                            <div class="step-title">A. DATA CALON SANTRI</div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">NIK Santri</label>
+                                <input type="number" name="Santri_NIK" class="form-control" oninput="if(this.value.length > 16) this.value = this.value.slice(0, 16);" placeholder="16 digit NIK" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7 mb-3"><label class="form-label fw-bold">Nama Lengkap</label><input type="text" name="Santri_Nama" class="form-control" placeholder="Isi sesuai nama di Akta/Kartu Keluarga" required></div>
+                                <div class="col-md-5 mb-3"><label class="form-label fw-bold">Nama Panggilan</label><input type="text" name="Santri_Panggilan" class="form-control" placeholder="Nama Panggilan" required></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-3"><label class="form-label fw-bold">Tempat Lahir</label><input type="text" name="Santri_Tempat" class="form-control" placeholder="Tempat Lahir" required></div>
+                                <div class="col-6 mb-3"><label class="form-label fw-bold">Tanggal Lahir</label><input type="date" name="Santri_Tgl" class="form-control" required></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Jenis Kelamin</label>
+                                <select class="form-select" name="santri_jenis_kelamin" required>
+                                    <option value="" selected disabled>-- Pilih Jenis Kelamin --</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3 p-3 bg-alamat">
+                                <label class="form-label d-block border-bottom pb-2 mb-3 fw-bold">Alamat Lengkap (7 Baris)</label>
+                                <div class="mb-2">
+                                    <input type="text" name="Alamat_1" class="form-control" placeholder="Nama Jalan" required>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        <input type="text" name="Alamat_2" class="form-control" placeholder="RT" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" name="Alamat_3" class="form-control" placeholder="RW" required>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" name="Alamat_4" class="form-control" placeholder="Kelurahan/Desa" required>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" name="Alamat_5" class="form-control" placeholder="Kecamatan" required>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" name="Alamat_6" class="form-control" placeholder="Kota/Kabupaten" required>
+                                </div>
+                                <div>
+                                    <input type="text" name="Alamat_7" class="form-control" placeholder="Provinsi" required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="button" class="btn btn-next" onclick="nextStep(1, 2)">Lanjut ke Data Ayah →</button>
+                            </div>
+                        </div>
+
+                        <div class="step-pane d-none" id="step2">
+                            <div class="step-title">B. DATA AYAH CALON SANTRI</div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">NIK Ayah</label>
+                                <input type="number" name="Ayah_NIK" class="form-control" oninput="if(this.value.length > 16) this.value = this.value.slice(0, 16);" placeholder="16 digit NIK" required>
+                            </div>
+                            <div class="mb-3"><label class="form-label fw-bold">Nama Lengkap Ayah</label><input type="text" name="Ayah_Nama" class="form-control" placeholder="Nama Lengkap Ayah" required></div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3"><label class="form-label fw-bold">No. WhatsApp</label><input type="tel" name="Ayah_WA" class="form-control" placeholder="No. WhastApp" required></div>
+                                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Pekerjaan</label><input type="text" name="Ayah_Kerja" class="form-control" placeholder="Pekerjaan Ayah" required></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Penghasilan Bulanan</label>
+                                <div class="input-group"><span class="input-group-text">Rp</span><input type="text" name="Ayah_Gaji" class="form-control" onkeyup="formatAccounting(this)" placeholder="Pendapatan Ayah" required></div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-prev" onclick="prevStep(2, 1)">← Kembali</button>
+                                <button type="button" class="btn btn-next" onclick="nextStep(2, 3)">Lanjut ke Data Ibu →</button>
+                            </div>
+                        </div>
+
+                        <div class="step-pane d-none" id="step3">
+                            <div class="step-title">C. DATA IBU CALON SANTRI</div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">NIK Ibu</label>
+                                <input type="number" name="Ibu_NIK" class="form-control" oninput="if(this.value.length > 16) this.value = this.value.slice(0, 16);" placeholder="16 digit NIK" required>
+                            </div>
+                            <div class="mb-3"><label class="form-label fw-bold">Nama Lengkap Ibu</label><input type="text" name="Ibu_Nama" class="form-control" placeholder="Nama Lengkap Ibu" required></div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3"><label class="form-label fw-bold">No. WhatsApp</label><input type="tel" name="Ibu_WA" class="form-control" placeholder="No. WhatsApp" required></div>
+                                <div class="col-md-6 mb-3"><label class="form-label fw-bold">Pekerjaan</label><input type="text" name="Ibu_Kerja" class="form-control" placeholder="Pekerjaan Ibu" required></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Penghasilan Bulanan</label>
+                                <div class="input-group"><span class="input-group-text">Rp</span><input type="text" name="Ibu_Gaji" class="form-control" onkeyup="formatAccounting(this)" placeholder="Pendapatan Ibu"required></div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-prev" onclick="prevStep(3, 2)">← Kembali</button>
+                                <button type="submit" class="btn btn-kirim">SIMPAN PENDAFTARAN ✅</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // 1. KONFIGURASI SUPABASE (Ganti dengan data asli Anda dari Dashboard Supabase)
+    const SUPABASE_URL = 'https://ehkpclyvwawztgvavwka.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVoa3BjbHl2d2F3enRndmF2d2thIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc3Njk0MzEsImV4cCI6MjA4MzM0NTQzMX0.rJhtmy3ekAQRnRsun8f6Soqjfb7sXrck6ofg4MkPXCg';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Fungsi Format Rupiah saat diketik
+    function formatAccounting(input) {
+        let value = input.value.replace(/[^0-9]/g, "");
+        if (value) input.value = new Intl.NumberFormat('id-ID').format(value);
+    }
+
+    // Fungsi Lanjut (Navigasi & Validasi)
+    function nextStep(current, next) {
+        const currentPane = document.getElementById('step' + current);
+        const inputs = currentPane.querySelectorAll('[required]');
+        let isValid = true;
+
+        // Bersihkan error lama
+        currentPane.querySelectorAll('.error-msg').forEach(el => el.remove());
+        currentPane.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+
+        // Cek satu per satu kolom yang wajib diisi
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                isValid = false;
+                input.classList.add('is-invalid');
+                const msg = document.createElement('small');
+                msg.className = 'error-msg';
+                msg.innerText = '⚠️ Wajib diisi!';
+                input.insertAdjacentElement('afterend', msg);
+            }
+        });
+
+        if (isValid) {
+            currentPane.classList.add('d-none');
+            document.getElementById('step' + next).classList.remove('d-none');
+            window.scrollTo(0, 0);
+        } else {
+            Swal.fire({ 
+                icon: 'error', 
+                title: 'Belum Lengkap', 
+                text: 'Mohon lengkapi data yang ditandai merah.', 
+                confirmButtonColor: '#f36f21' 
+            });
+        }
+    }
+
+    // Fungsi Kembali
+    function prevStep(current, prev) {
+        document.getElementById('step' + current).classList.add('d-none');
+        document.getElementById('step' + prev).classList.remove('d-none');
+        window.scrollTo(0, 0);
+    }
+
+    // Menghilangkan pesan error secara real-time saat user mengetik
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('is-invalid')) {
+            e.target.classList.remove('is-invalid');
+            const errorMsg = e.target.parentNode.querySelector('.error-msg');
+            if (errorMsg) errorMsg.remove();
+        }
+    });
+
+    // PROSES SUBMIT FINAL KE SUPABASE
+    document.getElementById('pendaftaranForm').onsubmit = async function(e) {
+        e.preventDefault();
+        
+        // Cek validasi di tab terakhir (Data Ibu)
+        const currentPane = document.getElementById('step3');
+        const inputs = currentPane.querySelectorAll('[required]');
+        let finalValid = true;
+
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                finalValid = false;
+                input.classList.add('is-invalid');
+            }
+        });
+
+        if (!finalValid) {
+            Swal.fire('Belum Lengkap', 'Mohon lengkapi Data Ibu.', 'error');
+            return;
+        }
+
+        // Tampilkan Loading
+        Swal.fire({
+            title: 'Menyimpan Data...',
+            text: 'Sedang mengirim data',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+
+        const formData = new FormData(this);
+        const payload = {
+            santri_nik: formData.get('Santri_NIK'),
+            santri_nama: formData.get('Santri_Nama'),
+            santri_panggilan: formData.get('Santri_Panggilan'),
+            santri_tempat_lahir: formData.get('Santri_Tempat'),
+            santri_tanggal_lahir: formData.get('Santri_Tgl'),
+            santri_jenis_kelamin: formData.get('santri_jenis_kelamin'),
+            alamat_jalan: formData.get('Alamat_1'),
+            alamat_rt: formData.get('Alamat_2'),
+            alamat_rw: formData.get('Alamat_3'),
+            alamat_kelurahan: formData.get('Alamat_4'),
+            alamat_kecamatan: formData.get('Alamat_5'),
+            alamat_kota: formData.get('Alamat_6'),
+            alamat_provinsi: formData.get('Alamat_7'),
+            ayah_nik: formData.get('Ayah_NIK'),
+            ayah_nama: formData.get('Ayah_Nama'),
+            ayah_wa: formData.get('Ayah_WA'),
+            ayah_pekerjaan: formData.get('Ayah_Kerja'),
+            ayah_penghasilan: formData.get('Ayah_Gaji'),
+            ibu_nik: formData.get('Ibu_NIK'),
+            ibu_nama: formData.get('Ibu_Nama'),
+            ibu_wa: formData.get('Ibu_WA'),
+            ibu_pekerjaan: formData.get('Ibu_Kerja'),
+            ibu_penghasilan: formData.get('Ibu_Gaji')
+        };
+
+        try {
+            const { error } = await supabaseClient
+                .from('pendaftaran_santri')
+                .insert([payload]);
+
+            if (error) throw error;
+
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Data disimpan..',
+                icon: 'success',
+                confirmButtonColor: '#009345'
+            }).then(() => {
+                window.location.href = 'home.html';
+            });
+
+        } catch (err) {
+            Swal.fire('Gagal!', 'Terjadi masalah: ' + err.message, 'error');
+        }
+    };
+</script>
+
+</body>
+</html>
