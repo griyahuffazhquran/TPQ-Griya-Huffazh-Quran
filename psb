@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSB Online - TPQ GHQ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --dark-green: #064e3b; /* Hijau Gelap Soft */
+            --soft-green: #10b981;
+            --bg-light: #f0fdf4;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-light); color: #1e293b; }
+        
+        /* Landing Page Style */
+        #landingPage {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.8)), 
+                        url('https://images.unsplash.com/photo-1541829070764-84a7d30dee3f?auto=format&fit=crop&q=80') center/cover;
+            color: white;
+        }
+
+        /* Form Style */
+        .wrapper { max-width: 800px; margin: 40px auto; padding: 0 15px; display: none; }
+        .card { border: none; border-radius: 25px; box-shadow: 0 20px 50px rgba(6, 78, 59, 0.15); }
+        .step { display: none; padding: 40px; }
+        .step.active { display: block; }
+        
+        .section-header { font-weight: 700; color: var(--dark-green); border-bottom: 2px solid #ecfdf5; margin-bottom: 25px; padding-bottom: 10px; }
+        .form-label { font-weight: 600; font-size: 0.85rem; color: #475569; }
+        .form-control, .form-select { border-radius: 12px; padding: 12px; border: 1px solid #e2e8f0; }
+        .form-control:focus { border-color: var(--soft-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+        
+        .btn-main { background: var(--dark-green); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 700; transition: 0.3s; font-size: 1.1rem; }
+        .btn-main:hover { background: #043a2c; transform: scale(1.05); color: white; }
+        .btn-next { background: var(--dark-green); color: white; border-radius: 12px; padding: 12px 30px; font-weight: 600; border: none; }
+        .btn-next:hover { background: #043a2c; color: white; }
+        
+        .progress-bar { background: var(--soft-green); }
+        .required-star { color: #ef4444; }
+    </style>
+</head>
+<body>
+
+<div id="landingPage">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3">PENERIMAAN SANTRI BARU</h1>
+        <p class="lead mb-5">Membangun Generasi Robbani, Berakhlak Mulia, dan Cerdas Berlandaskan Al-Qur'an.</p>
+        <button class="btn btn-main shadow-lg" onclick="startRegistration()">Daftar Sekarang!</button>
+    </div>
+</div>
+
+<div class="wrapper" id="formWrapper">
+    <div class="card overflow-hidden">
+        <div class="progress" style="height: 8px; border-radius: 0;">
+            <div id="progress" class="progress-bar" style="width: 25%;"></div>
+        </div>
+
+        <form id="psbForm" novalidate>
+            <div class="step active" id="step1">
+                <h4 class="section-header">DATA DIRI SANTRI</h4>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label">NIK SANTRI*</label><input type="number" name="nik_santri" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP*</label><input type="text" name="nama_lengkap" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">NAMA PANGGILAN</label><input type="text" name="nama_panggilan" class="form-control"></div>
+                    <div class="col-md-3"><label class="form-label">TEMPAT LAHIR*</label><input type="text" name="tempat_lahir" class="form-control" required></div>
+                    <div class="col-md-3"><label class="form-label">TANGGAL LAHIR*</label><input type="date" name="tanggal_lahir" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">JENIS KELAMIN</label>
+                        <select name="jenis_kelamin" class="form-select"><option value="LAKI-LAKI">LAKI-LAKI</option><option value="PEREMPUAN">PEREMPUAN</option></select>
+                    </div>
+                    <div class="col-12"><label class="form-label">NAMA JALAN*</label><input type="text" name="nama_jalan" class="form-control" required></div>
+                    <div class="col-md-3"><label class="form-label">RT*</label><input type="text" name="rt" class="form-control" required></div>
+                    <div class="col-md-3"><label class="form-label">RW*</label><input type="text" name="rw" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">KELURAHAN / DESA*</label><input type="text" name="kelurahan_desa" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">KECAMATAN*</label><input type="text" name="kecamatan" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">KOTA / KABUPATEN*</label><input type="text" name="kota_kabupaten" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">PROVINSI*</label><input type="text" name="provinsi" class="form-control" required></div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">FOTO AKTA LAHIR / KK (JPEG)*</label>
+                        <input type="file" id="foto_input" class="form-control" accept="image/jpeg" required>
+                        <input type="hidden" name="foto_dokumen" id="foto_dokumen">
+                    </div>
+                </div>
+                <div class="mt-4 text-end"><button type="button" class="btn btn-next" onclick="validateAndGo(2)">Lanjut ke Data Ayah</button></div>
+            </div>
+
+            <div class="step" id="step2">
+                <h4 class="section-header">DATA AYAH KANDUNG</h4>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label">NIK AYAH*</label><input type="number" name="nik_ayah" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP AYAH*</label><input type="text" name="nama_lengkap_ayah" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">TEMPAT LAHIR AYAH*</label><input type="text" name="tempat_lahir_ayah" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">TANGGAL LAHIR AYAH*</label><input type="date" name="tanggal_lahir_ayah" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">NOMOR HANDPHONE AYAH*</label><input type="tel" name="hp_ayah" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">PEKERJAAN AYAH*</label><input type="text" name="pekerjaan_ayah" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">PENGHASILAN AYAH*</label><input type="text" name="penghasilan_ayah" class="form-control" required></div>
+                </div>
+                <div class="mt-4 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" onclick="go(1)">Kembali</button>
+                    <button type="button" class="btn btn-next" onclick="validateAndGo(3)">Lanjut ke Data Ibu</button>
+                </div>
+            </div>
+
+            <div class="step" id="step3">
+                <h4 class="section-header">DATA IBU KANDUNG</h4>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label">NIK IBU*</label><input type="number" name="nik_ibu" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP IBU*</label><input type="text" name="nama_lengkap_ibu" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">TEMPAT LAHIR IBU*</label><input type="text" name="tempat_lahir_ibu" class="form-control" required></div>
+                    <div class="col-md-6"><label class="form-label">TANGGAL LAHIR IBU*</label><input type="date" name="tanggal_lahir_ibu" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">NOMOR HANDPHONE IBU*</label><input type="tel" name="hp_ibu" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">PEKERJAAN IBU*</label><input type="text" name="pekerjaan_ibu" class="form-control" required></div>
+                    <div class="col-md-4"><label class="form-label">PENGHASILAN IBU*</label><input type="text" name="penghasilan_ibu" class="form-control" required></div>
+                </div>
+                <div class="mt-4 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" onclick="go(2)">Kembali</button>
+                    <button type="button" class="btn btn-next" onclick="validateAndGo(4)">Lanjut ke Data Wali</button>
+                </div>
+            </div>
+
+            <div class="step" id="step4">
+                <h4 class="section-header">DATA WALI</h4>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label">NIK WALI</label><input type="number" name="nik_wali" class="form-control"></div>
+                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP WALI</label><input type="text" name="nama_lengkap_wali" class="form-control"></div>
+                    <div class="col-md-4"><label class="form-label">STATUS WALI</label><input type="text" name="status_wali" class="form-control"></div>
+                    <div class="col-md-4"><label class="form-label">NOMOR HANDPHONE WALI</label><input type="tel" name="hp_wali" class="form-control"></div>
+                    <div class="col-md-4"><label class="form-label">PEKERJAAN WALI</label><input type="text" name="pekerjaan_wali" class="form-control"></div>
+                    <div class="col-12"><label class="form-label">PENGHASILAN WALI</label><input type="text" name="penghasilan_wali" class="form-control"></div>
+                </div>
+                <div class="mt-4 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" onclick="go(3)">Kembali</button>
+                    <button type="submit" class="btn btn-next bg-success shadow px-5">Kirim Pendaftaran</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMLh4el3wyWU0dZ_g12HOl9UKql-FBS9yZ2Qq8KaCvkX_I76DznF7jsFnTtVtjVXGQ6Q/exec"; 
+
+    function startRegistration() {
+        document.getElementById('landingPage').style.display = 'none';
+        document.getElementById('formWrapper').style.display = 'block';
+    }
+
+    function go(step) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + step).classList.add('active');
+        document.getElementById('progress').style.width = (step/4 * 100) + '%';
+        window.scrollTo(0,0);
+    }
+
+    // Fungsi Validasi Field Kosong
+    function validateAndGo(nextStepNumber) {
+        const currentStep = document.querySelector('.step.active');
+        const inputs = currentStep.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+
+        if (!isValid) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Data Belum Lengkap',
+                text: 'Harap isi semua kolom bertanda bintang (*) sebelum melanjutkan.',
+                confirmButtonColor: '#064e3b'
+            });
+            return;
+        }
+        go(nextStepNumber);
+    }
+
+    // Convert Foto ke Base64 (agar bisa dikirim lewat JSON)
+    document.getElementById('foto_input').addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('foto_dokumen').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('psbForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Cek kembali field wajib di step terakhir jika ada
+        const inputs = this.querySelectorAll('.step.active input[required]');
+        let isValid = true;
+        inputs.forEach(i => { if(!i.value) isValid = false; });
+
+        if(!isValid) {
+            Swal.fire('Perhatian', 'Harap lengkapi data wajib.', 'warning');
+            return;
+        }
+
+        Swal.fire({
+            title: 'Sedang Mengirim...',
+            text: 'Harap tidak menutup browser.',
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
+        .then(r => r.json())
+        .then(res => {
+            if(res.result === 'success') {
+                Swal.fire('Alhamdulillah!', 'Pendaftaran berhasil dikirim.', 'success')
+                .then(() => location.reload());
+            } else {
+                Swal.fire('Error', res.error, 'error');
+            }
+        })
+        .catch(() => Swal.fire('Error', 'Gagal menghubungi server.', 'error'));
+    });
+</script>
+</body>
+</html>
