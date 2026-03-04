@@ -6,141 +6,1006 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <title>PSB Online - TPQ GHQ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
-            --dark-green: #064e3b; /* Hijau Gelap Soft */
+            --dark-green: #065f46;
             --soft-green: #10b981;
-            --bg-light: #f0fdf4;
+            --light-green: #d1fae5;
+            --bg-cream: #f0fdf4;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --card-shadow: 0 25px 60px rgba(6, 95, 70, 0.12);
         }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-light); color: #1e293b; }
-        
-        /* Landing Page Style */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== LANDING PAGE ===== */
         #landingPage {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .landing-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(6, 95, 70, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+        }
+
+        .pattern-overlay {
+            position: absolute;
+            inset: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23065f46' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .floating-shapes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 95, 70, 0.1));
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(6, 95, 70, 0.15), rgba(16, 185, 129, 0.1));
+            bottom: 10%;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), transparent);
+            top: 20%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) rotate(3deg); }
+        }
+
+        .landing-content {
+            position: relative;
+            z-index: 10;
             text-align: center;
-            background: linear-gradient(rgba(6, 78, 59, 0.8), rgba(6, 78, 59, 0.8)), 
-                        url('https://images.unsplash.com/photo-1541829070764-84a7d30dee3f?auto=format&fit=crop&q=80') center/cover;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-badge {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--dark-green), var(--soft-green));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 20px 40px rgba(6, 95, 70, 0.3);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 20px 40px rgba(6, 95, 70, 0.3); }
+            50% { box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4); }
+        }
+
+        .logo-badge svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .landing-content h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--dark-green);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .landing-content h2 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 700;
+            color: var(--soft-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .landing-content .lead {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, var(--dark-green), #047857);
+            color: white;
+            border: none;
+            padding: 18px 48px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(6, 95, 70, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-main::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(6, 95, 70, 0.4);
+        }
+
+        .btn-main:hover::before {
+            opacity: 1;
+        }
+
+        .btn-main:active {
+            transform: translateY(-1px);
+        }
+
+        /* ===== FORM WRAPPER ===== */
+        .wrapper {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 15px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .step-item:not(:last-child)::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: #e2e8f0;
+            margin: 0 8px;
+            border-radius: 3px;
+            transition: background 0.4s ease;
+        }
+
+        .step-item.completed::after {
+            background: var(--soft-green);
+        }
+
+        .step-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: #e2e8f0;
+            color: var(--text-muted);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-item.active .step-circle {
+            background: linear-gradient(135deg, var(--dark-green), var(--soft-green));
+            color: white;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+            transform: scale(1.1);
+        }
+
+        .step-item.completed .step-circle {
+            background: var(--soft-green);
             color: white;
         }
 
-        /* Form Style */
-        .wrapper { max-width: 800px; margin: 40px auto; padding: 0 15px; display: none; }
-        .card { border: none; border-radius: 25px; box-shadow: 0 20px 50px rgba(6, 78, 59, 0.15); }
-        .step { display: none; padding: 40px; }
-        .step.active { display: block; }
-        
-        .section-header { font-weight: 700; color: var(--dark-green); border-bottom: 2px solid #ecfdf5; margin-bottom: 25px; padding-bottom: 10px; }
-        .form-label { font-weight: 600; font-size: 0.85rem; color: #475569; }
-        .form-control, .form-select { border-radius: 12px; padding: 12px; border: 1px solid #e2e8f0; }
-        .form-control:focus { border-color: var(--soft-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
-        
-        .btn-main { background: var(--dark-green); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 700; transition: 0.3s; font-size: 1.1rem; }
-        .btn-main:hover { background: #043a2c; transform: scale(1.05); color: white; }
-        .btn-next { background: var(--dark-green); color: white; border-radius: 12px; padding: 12px 30px; font-weight: 600; border: none; }
-        .btn-next:hover { background: #043a2c; color: white; }
-        
-        .progress-bar { background: var(--soft-green); }
-        .required-star { color: #ef4444; }
+        .step-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+
+        .step-item.active .step-label,
+        .step-item.completed .step-label {
+            color: var(--dark-green);
+        }
+
+        /* Card */
+        .card {
+            border: none;
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            background: white;
+        }
+
+        .progress-container {
+            padding: 0;
+            background: transparent;
+        }
+
+        .progress {
+            height: 4px;
+            border-radius: 0;
+            background: #e2e8f0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--soft-green), var(--dark-green));
+            transition: width 0.5s ease;
+        }
+
+        /* Steps */
+        .steps-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step {
+            display: none;
+            padding: 40px;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .section-header {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--dark-green);
+            border-bottom: 2px solid var(--light-green);
+            margin-bottom: 28px;
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-header svg {
+            width: 24px;
+            height: 24px;
+            opacity: 0.8;
+        }
+
+        /* Form Elements */
+        .form-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background: #fafafa;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--soft-green);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            background: white;
+        }
+
+        .form-control.is-invalid {
+            border-color: #ef4444;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        /* File Upload */
+        .file-upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--soft-green);
+            background: #f0fdf4;
+        }
+
+        .file-upload-area.has-file {
+            border-color: var(--soft-green);
+            border-style: solid;
+            background: var(--light-green);
+        }
+
+        .file-upload-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 12px;
+            opacity: 0.5;
+        }
+
+        .file-upload-area.has-file .file-upload-icon {
+            opacity: 1;
+            color: var(--dark-green);
+        }
+
+        .file-upload-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .file-upload-area.has-file .file-upload-text {
+            color: var(--dark-green);
+            font-weight: 600;
+        }
+
+        #foto_input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .preview-container {
+            margin-top: 16px;
+            display: none;
+        }
+
+        .preview-container.show {
+            display: block;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Buttons */
+        .btn-next {
+            background: linear-gradient(135deg, var(--dark-green), #047857);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(6, 95, 70, 0.25);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 95, 70, 0.35);
+            color: white;
+        }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: var(--text-dark);
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-back:hover {
+            background: #e2e8f0;
+            color: var(--text-dark);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 40px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.35);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45);
+            color: white;
+        }
+
+        /* Required Star */
+        .required-star {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        /* Helper Text */
+        .helper-text {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* Phone Preview */
+        .phone-preview {
+            font-size: 0.75rem;
+            color: var(--soft-green);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .step {
+                padding: 24px;
+            }
+
+            .step-indicator {
+                gap: 0;
+            }
+
+            .step-item:not(:last-child)::after {
+                width: 30px;
+                margin: 0 4px;
+            }
+
+            .step-circle {
+                width: 36px;
+                height: 36px;
+                font-size: 0.8rem;
+            }
+
+            .step-label {
+                display: none;
+            }
+
+            .section-header {
+                font-size: 1.1rem;
+            }
+
+            .landing-content h1 {
+                font-size: 1.6rem;
+            }
+
+            .btn-main {
+                padding: 16px 36px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step {
+                padding: 20px 16px;
+            }
+
+            .form-control,
+            .form-select {
+                padding: 12px 14px;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
 
+<!-- Landing Page -->
 <div id="landingPage">
-    <div class="container">
-        <h1 class="display-3 fw-bold mb-3">TPQ GRIYA HUFFAZH QUR'AN</h1>
-        <h1 class="display-3 fw-bold mb-3">PENERIMAAN SANTRI BARU (PSB)</h1>
-        <p class="lead mb-5" style="font-style: italic;">(Siapkan foto Akta/KK calon santri dengan ukuran maksimal 2 MB)</p>
-        <button class="btn btn-main shadow-lg" onclick="startRegistration()">Daftar Sekarang!</button>
+    <div class="landing-bg"></div>
+    <div class="pattern-overlay"></div>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <div class="landing-content">
+        <div class="logo-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+        </div>
+        <h1>TPQ GRIYA HUFFAZH QUR'AN</h1>
+        <h2>PENERIMAAN SANTRI BARU</h2>
+        <p class="lead">
+            Silakan siapkan dokumen persyaratan berupa foto Akta Kelahiran atau Kartu Keluarga dengan ukuran maksimal 2 MB (format JPEG)
+        </p>
+        <button class="btn-main" onclick="startRegistration()">
+            Daftar Sekarang
+        </button>
     </div>
 </div>
 
+<!-- Form Wrapper -->
 <div class="wrapper" id="formWrapper">
-    <div class="card overflow-hidden">
-        <div class="progress" style="height: 8px; border-radius: 0;">
-            <div id="progress" class="progress-bar" style="width: 25%;"></div>
+    <div class="form-header">
+        <h2>Formulir Pendaftaran Santri Baru</h2>
+        <p>Silakan lengkapi data dengan benar</p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+        <div class="step-item active" data-step="1">
+            <div class="step-circle">1</div>
+            <span class="step-label">Data Santri</span>
+        </div>
+        <div class="step-item" data-step="2">
+            <div class="step-circle">2</div>
+            <span class="step-label">Data Ayah</span>
+        </div>
+        <div class="step-item" data-step="3">
+            <div class="step-circle">3</div>
+            <span class="step-label">Data Ibu</span>
+        </div>
+        <div class="step-item" data-step="4">
+            <div class="step-circle">4</div>
+            <span class="step-label">Data Wali</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="progress-container">
+            <div class="progress">
+                <div id="progress" class="progress-bar" style="width: 25%;"></div>
+            </div>
         </div>
 
         <form id="psbForm" novalidate>
-            <div class="step active" id="step1">
-                <h4 class="section-header">DATA DIRI SANTRI</h4>
-                <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">NIK SANTRI*</label><input type="number" name="nik_santri" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP*</label><input type="text" name="nama_lengkap" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">NAMA PANGGILAN</label><input type="text" name="nama_panggilan" class="form-control"></div>
-                    <div class="col-md-3"><label class="form-label">TEMPAT LAHIR*</label><input type="text" name="tempat_lahir" class="form-control" required></div>
-                    <div class="col-md-3"><label class="form-label">TANGGAL LAHIR*</label><input type="date" name="tanggal_lahir" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">JENIS KELAMIN</label>
-                        <select name="jenis_kelamin" class="form-select"><option value="LAKI-LAKI">LAKI-LAKI</option><option value="PEREMPUAN">PEREMPUAN</option></select>
+            <div class="steps-wrapper">
+                <!-- Step 1: Data Santri -->
+                <div class="step active" id="step1">
+                    <h4 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        Data Diri Santri
+                    </h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">NIK Santri<span class="required-star">*</span></label>
+                            <input type="text" name="nik_santri" class="form-control" maxlength="16" pattern="[0-9]{16}" placeholder="16 digit NIK" required>
+                            <span class="helper-text">Masukkan 16 digit NIK</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Lengkap<span class="required-star">*</span></label>
+                            <input type="text" name="nama_lengkap" class="form-control" placeholder="Sesuai akta/kartu identitas" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Panggilan</label>
+                            <input type="text" name="nama_panggilan" class="form-control" placeholder="Nama panggilan sehari-hari">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tempat Lahir<span class="required-star">*</span></label>
+                            <input type="text" name="tempat_lahir" class="form-control" placeholder="Kota kelahiran" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tanggal Lahir<span class="required-star">*</span></label>
+                            <input type="date" name="tanggal_lahir" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" class="form-select">
+                                <option value="LAKI-LAKI">Laki-laki</option>
+                                <option value="PEREMPUAN">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Nama Jalan<span class="required-star">*</span></label>
+                            <input type="text" name="nama_jalan" class="form-control" placeholder="Nama jalan, nomor rumah, blok, dll" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">RT<span class="required-star">*</span></label>
+                            <input type="text" name="rt" class="form-control" placeholder="001" maxlength="3" required inputmode="numeric">
+                            <span class="helper-text">Contoh: 001</span>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">RW<span class="required-star">*</span></label>
+                            <input type="text" name="rw" class="form-control" placeholder="002" maxlength="3" required inputmode="numeric">
+                            <span class="helper-text">Contoh: 002</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Kelurahan/Desa<span class="required-star">*</span></label>
+                            <input type="text" name="kelurahan_desa" class="form-control" placeholder="Nama kelurahan/desa" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Kecamatan<span class="required-star">*</span></label>
+                            <input type="text" name="kecamatan" class="form-control" placeholder="Nama kecamatan" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Kota/Kabupaten<span class="required-star">*</span></label>
+                            <input type="text" name="kota_kabupaten" class="form-control" placeholder="Nama kota/kabupaten" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Provinsi<span class="required-star">*</span></label>
+                            <input type="text" name="provinsi" class="form-control" placeholder="Nama provinsi" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Foto Akta Lahir/KK (JPEG, maks. 2MB)<span class="required-star">*</span></label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <input type="file" id="foto_input" accept="image/jpeg,image/jpg,image/png" required>
+                                <div class="file-upload-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                                        <polyline points="21 15 16 10 5 21"/>
+                                    </svg>
+                                </div>
+                                <p class="file-upload-text" id="fileUploadText">Klik untuk memilih foto atau drag & drop</p>
+                            </div>
+                            <div class="preview-container" id="previewContainer">
+                                <img src="" alt="Preview" class="preview-image" id="previewImage">
+                            </div>
+                            <input type="hidden" name="foto_dokumen" id="foto_dokumen">
+                        </div>
                     </div>
-                    <div class="col-12"><label class="form-label">NAMA JALAN*</label><input type="text" name="nama_jalan" class="form-control" required></div>
-                    <div class="col-md-3"><label class="form-label">RT*</label><input type="text" name="rt" class="form-control" required></div>
-                    <div class="col-md-3"><label class="form-label">RW*</label><input type="text" name="rw" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">KELURAHAN / DESA*</label><input type="text" name="kelurahan_desa" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">KECAMATAN*</label><input type="text" name="kecamatan" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">KOTA / KABUPATEN*</label><input type="text" name="kota_kabupaten" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">PROVINSI*</label><input type="text" name="provinsi" class="form-control" required></div>
-                    
-                    <div class="col-12">
-                        <label class="form-label">FOTO AKTA LAHIR / KK (JPEG) MAKS. 2 MB*</label>
-                        <input type="file" id="foto_input" class="form-control" accept="image/jpeg" required>
-                        <input type="hidden" name="foto_dokumen" id="foto_dokumen">
+                    <div class="mt-4 text-end">
+                        <button type="button" class="btn btn-next" onclick="validateAndGo(2)">
+                            Lanjut ke Data Ayah
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
-                <div class="mt-4 text-end"><button type="button" class="btn btn-next" onclick="validateAndGo(2)">Lanjut ke Data Ayah</button></div>
-            </div>
 
-            <div class="step" id="step2">
-                <h4 class="section-header">DATA AYAH KANDUNG</h4>
-                <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">NIK AYAH*</label><input type="number" name="nik_ayah" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP AYAH*</label><input type="text" name="nama_lengkap_ayah" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">TEMPAT LAHIR AYAH*</label><input type="text" name="tempat_lahir_ayah" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">TANGGAL LAHIR AYAH*</label><input type="date" name="tanggal_lahir_ayah" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">NOMOR HANDPHONE AYAH*</label><input type="tel" name="hp_ayah" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">PEKERJAAN AYAH*</label><input type="text" name="pekerjaan_ayah" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">PENGHASILAN AYAH*</label><input type="text" name="penghasilan_ayah" class="form-control" required></div>
+                <!-- Step 2: Data Ayah -->
+                <div class="step" id="step2">
+                    <h4 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Data Ayah Kandung
+                    </h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">NIK Ayah<span class="required-star">*</span></label>
+                            <input type="text" name="nik_ayah" class="form-control" maxlength="16" pattern="[0-9]{16}" placeholder="16 digit NIK" required>
+                            <span class="helper-text">Masukkan 16 digit NIK</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Lengkap Ayah<span class="required-star">*</span></label>
+                            <input type="text" name="nama_lengkap_ayah" class="form-control" placeholder="Nama sesuai KTP" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tempat Lahir Ayah<span class="required-star">*</span></label>
+                            <input type="text" name="tempat_lahir_ayah" class="form-control" placeholder="Kota kelahiran" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tanggal Lahir Ayah<span class="required-star">*</span></label>
+                            <input type="date" name="tanggal_lahir_ayah" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Nomor HP Ayah<span class="required-star">*</span></label>
+                            <input type="tel" name="hp_ayah" class="form-control phone-input" placeholder="08xxxxxxxxxx" required>
+                            <span class="helper-text">Akan dikirim dalam format 62xxx</span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Pekerjaan Ayah<span class="required-star">*</span></label>
+                            <input type="text" name="pekerjaan_ayah" class="form-control" placeholder="Pekerjaan saat ini" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Penghasilan Ayah<span class="required-star">*</span></label>
+                            <select name="penghasilan_ayah" class="form-select" required>
+                                <option value="">Pilih rentang</option>
+                                <option value="< 1.000.000">< Rp 1.000.000</option>
+                                <option value="1.000.000 - 3.000.000">Rp 1.000.000 - 3.000.000</option>
+                                <option value="3.000.000 - 5.000.000">Rp 3.000.000 - 5.000.000</option>
+                                <option value="5.000.000 - 10.000.000">Rp 5.000.000 - 10.000.000</option>
+                                <option value="> 10.000.000">> Rp 10.000.000</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 d-flex justify-content-between">
+                        <button type="button" class="btn btn-back" onclick="go(1)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                                <line x1="19" y1="12" x2="5" y2="12"/>
+                                <polyline points="12 19 5 12 12 5"/>
+                            </svg>
+                            Kembali
+                        </button>
+                        <button type="button" class="btn btn-next" onclick="validateAndGo(3)">
+                            Lanjut ke Data Ibu
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="mt-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" onclick="go(1)">Kembali</button>
-                    <button type="button" class="btn btn-next" onclick="validateAndGo(3)">Lanjut ke Data Ibu</button>
-                </div>
-            </div>
 
-            <div class="step" id="step3">
-                <h4 class="section-header">DATA IBU KANDUNG</h4>
-                <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">NIK IBU*</label><input type="number" name="nik_ibu" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP IBU*</label><input type="text" name="nama_lengkap_ibu" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">TEMPAT LAHIR IBU*</label><input type="text" name="tempat_lahir_ibu" class="form-control" required></div>
-                    <div class="col-md-6"><label class="form-label">TANGGAL LAHIR IBU*</label><input type="date" name="tanggal_lahir_ibu" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">NOMOR HANDPHONE IBU*</label><input type="tel" name="hp_ibu" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">PEKERJAAN IBU*</label><input type="text" name="pekerjaan_ibu" class="form-control" required></div>
-                    <div class="col-md-4"><label class="form-label">PENGHASILAN IBU*</label><input type="text" name="penghasilan_ibu" class="form-control" required></div>
+                <!-- Step 3: Data Ibu -->
+                <div class="step" id="step3">
+                    <h4 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Data Ibu Kandung
+                    </h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">NIK Ibu<span class="required-star">*</span></label>
+                            <input type="text" name="nik_ibu" class="form-control" maxlength="16" pattern="[0-9]{16}" placeholder="16 digit NIK" required>
+                            <span class="helper-text">Masukkan 16 digit NIK</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Lengkap Ibu<span class="required-star">*</span></label>
+                            <input type="text" name="nama_lengkap_ibu" class="form-control" placeholder="Nama sesuai KTP" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tempat Lahir Ibu<span class="required-star">*</span></label>
+                            <input type="text" name="tempat_lahir_ibu" class="form-control" placeholder="Kota kelahiran" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tanggal Lahir Ibu<span class="required-star">*</span></label>
+                            <input type="date" name="tanggal_lahir_ibu" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Nomor HP Ibu<span class="required-star">*</span></label>
+                            <input type="tel" name="hp_ibu" class="form-control phone-input" placeholder="08xxxxxxxxxx" required>
+                            <span class="helper-text">Akan dikirim dalam format 62xxx</span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Pekerjaan Ibu<span class="required-star">*</span></label>
+                            <input type="text" name="pekerjaan_ibu" class="form-control" placeholder="Pekerjaan saat ini" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Penghasilan Ibu<span class="required-star">*</span></label>
+                            <select name="penghasilan_ibu" class="form-select" required>
+                                <option value="">Pilih rentang</option>
+                                <option value="< 1.000.000">< Rp 1.000.000</option>
+                                <option value="1.000.000 - 3.000.000">Rp 1.000.000 - 3.000.000</option>
+                                <option value="3.000.000 - 5.000.000">Rp 3.000.000 - 5.000.000</option>
+                                <option value="5.000.000 - 10.000.000">Rp 5.000.000 - 10.000.000</option>
+                                <option value="> 10.000.000">> Rp 10.000.000</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 d-flex justify-content-between">
+                        <button type="button" class="btn btn-back" onclick="go(2)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                                <line x1="19" y1="12" x2="5" y2="12"/>
+                                <polyline points="12 19 5 12 12 5"/>
+                            </svg>
+                            Kembali
+                        </button>
+                        <button type="button" class="btn btn-next" onclick="validateAndGo(4)">
+                            Lanjut ke Data Wali
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="mt-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" onclick="go(2)">Kembali</button>
-                    <button type="button" class="btn btn-next" onclick="validateAndGo(4)">Lanjut ke Data Wali</button>
-                </div>
-            </div>
 
-            <div class="step" id="step4">
-                <h4 class="section-header">DATA WALI</h4>
-                <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">NIK WALI</label><input type="number" name="nik_wali" class="form-control"></div>
-                    <div class="col-md-6"><label class="form-label">NAMA LENGKAP WALI</label><input type="text" name="nama_lengkap_wali" class="form-control"></div>
-                    <div class="col-md-4"><label class="form-label">STATUS WALI</label><input type="text" name="status_wali" class="form-control"></div>
-                    <div class="col-md-4"><label class="form-label">NOMOR HANDPHONE WALI</label><input type="tel" name="hp_wali" class="form-control"></div>
-                    <div class="col-md-4"><label class="form-label">PEKERJAAN WALI</label><input type="text" name="pekerjaan_wali" class="form-control"></div>
-                    <div class="col-12"><label class="form-label">PENGHASILAN WALI</label><input type="text" name="penghasilan_wali" class="form-control"></div>
-                </div>
-                <div class="mt-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-secondary" onclick="go(3)">Kembali</button>
-                    <button type="submit" class="btn btn-next bg-success shadow px-5">Kirim Pendaftaran</button>
+                <!-- Step 4: Data Wali -->
+                <div class="step" id="step4">
+                    <h4 class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Data Wali (Opsional)
+                    </h4>
+                    <p class="text-muted mb-3" style="font-size: 0.9rem;">Isi data wali jika santri tidak tinggal bersama orang tua</p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">NIK Wali</label>
+                            <input type="text" name="nik_wali" class="form-control" maxlength="16" pattern="[0-9]*" placeholder="16 digit NIK (jika ada)">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Lengkap Wali</label>
+                            <input type="text" name="nama_lengkap_wali" class="form-control" placeholder="Nama wali">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Status Wali</label>
+                            <select name="status_wali" class="form-select">
+                                <option value="">- Pilih -</option>
+                                <option value="Kakek">Kakek</option>
+                                <option value="Nenek">Nenek</option>
+                                <option value="Paman">Paman</option>
+                                <option value="Bibi">Bibi</option>
+                                <option value="Kakak">Kakak</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Nomor HP Wali</label>
+                            <input type="tel" name="hp_wali" class="form-control phone-input" placeholder="08xxxxxxxxxx">
+                            <span class="helper-text">Akan dikirim dalam format 62xxx</span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Pekerjaan Wali</label>
+                            <input type="text" name="pekerjaan_wali" class="form-control" placeholder="Pekerjaan wali">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Penghasilan Wali</label>
+                            <select name="penghasilan_wali" class="form-select">
+                                <option value="">- Pilih -</option>
+                                <option value="< 1.000.000">< Rp 1.000.000</option>
+                                <option value="1.000.000 - 3.000.000">Rp 1.000.000 - 3.000.000</option>
+                                <option value="3.000.000 - 5.000.000">Rp 3.000.000 - 5.000.000</option>
+                                <option value="5.000.000 - 10.000.000">Rp 5.000.000 - 10.000.000</option>
+                                <option value="> 10.000.000">> Rp 10.000.000</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 d-flex justify-content-between">
+                        <button type="button" class="btn btn-back" onclick="go(3)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                                <line x1="19" y1="12" x2="5" y2="12"/>
+                                <polyline points="12 19 5 12 12 5"/>
+                            </svg>
+                            Kembali
+                        </button>
+                        <button type="submit" class="btn btn-submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            Kirim Pendaftaran
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -148,101 +1013,390 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMLh4el3wyWU0dZ_g12HOl9UKql-FBS9yZ2Qq8KaCvkX_I76DznF7jsFnTtVtjVXGQ6Q/exec"; 
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMLh4el3wyWU0dZ_g12HOl9UKql-FBS9yZ2Qq8KaCvkX_I76DznF7jsFnTtVtjVXGQ6Q/exec";
+    let currentStep = 1;
+
+    // ===== FUNGSI HELPER =====
+    
+    // Fungsi untuk format nomor HP (0 -> 62)
+    function formatPhoneNumber(phone) {
+        if (!phone) return '';
+        // Hapus karakter non-digit
+        phone = phone.replace(/\D/g, '');
+        // Jika dimulai dengan 0, ganti dengan 62
+        if (phone.startsWith('0')) {
+            phone = '62' + phone.substring(1);
+        }
+        // Jika dimulai dengan +62 atau sudah 62, biarkan
+        return phone;
+    }
+
+    // Fungsi untuk padding RT/RW (memastikan 3 digit)
+    function padRTRW(value) {
+        if (!value) return '';
+        // Hapus karakter non-digit
+        value = value.replace(/\D/g, '');
+        // Pad dengan 0 di depan jika kurang dari 3 digit
+        return value.padStart(3, '0');
+    }
+
+    // ===== NAVIGASI =====
 
     function startRegistration() {
-        document.getElementById('landingPage').style.display = 'none';
-        document.getElementById('formWrapper').style.display = 'block';
+        document.getElementById('landingPage').style.opacity = '0';
+        document.getElementById('landingPage').style.transition = 'opacity 0.5s ease';
+        setTimeout(() => {
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('formWrapper').style.display = 'block';
+        }, 500);
     }
 
     function go(step) {
+        currentStep = step;
+        
+        // Update steps
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         document.getElementById('step' + step).classList.add('active');
-        document.getElementById('progress').style.width = (step/4 * 100) + '%';
-        window.scrollTo(0,0);
+        
+        // Update progress bar
+        document.getElementById('progress').style.width = (step / 4 * 100) + '%';
+        
+        // Update step indicators
+        document.querySelectorAll('.step-item').forEach((item, index) => {
+            item.classList.remove('active', 'completed');
+            if (index + 1 === step) {
+                item.classList.add('active');
+            } else if (index + 1 < step) {
+                item.classList.add('completed');
+            }
+        });
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Fungsi Validasi Field Kosong
     function validateAndGo(nextStepNumber) {
-        const currentStep = document.querySelector('.step.active');
-        const inputs = currentStep.querySelectorAll('input[required], select[required]');
+        const currentStepEl = document.querySelector('.step.active');
+        const inputs = currentStepEl.querySelectorAll('input[required], select[required]');
         let isValid = true;
+        let firstInvalid = null;
 
         inputs.forEach(input => {
+            // Remove previous invalid state
+            input.classList.remove('is-invalid');
+            
+            // Check if empty
             if (!input.value.trim()) {
                 input.classList.add('is-invalid');
                 isValid = false;
-            } else {
-                input.classList.remove('is-invalid');
+                if (!firstInvalid) firstInvalid = input;
+            }
+            
+            // Special validation for NIK
+            if (input.name.includes('nik_') && input.value && input.value.length !== 16) {
+                input.classList.add('is-invalid');
+                isValid = false;
+                if (!firstInvalid) firstInvalid = input;
+            }
+            
+            // Validate file input
+            if (input.type === 'file' && input.required) {
+                if (!input.files || !input.files[0]) {
+                    document.getElementById('fileUploadArea').style.borderColor = '#ef4444';
+                    isValid = false;
+                }
             }
         });
 
         if (!isValid) {
+            // Scroll to first invalid field
+            if (firstInvalid) {
+                firstInvalid.focus();
+                firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
             Swal.fire({
                 icon: 'warning',
                 title: 'Data Belum Lengkap',
-                text: 'Harap isi semua kolom bertanda bintang (*) sebelum melanjutkan.',
-                confirmButtonColor: '#064e3b'
+                text: 'Harap isi semua kolom wajib yang ditandai bintang (*) dengan benar.',
+                confirmButtonColor: '#065f46',
+                confirmButtonText: 'Mengerti'
             });
             return;
         }
+        
         go(nextStepNumber);
     }
 
-    // Tambahan di dalam script psb.html
-    document.getElementById('foto_input').addEventListener('change', function() {
+    // ===== FILE UPLOAD =====
+
+    const fileInput = document.getElementById('foto_input');
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileUploadText = document.getElementById('fileUploadText');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImage = document.getElementById('previewImage');
+    const fotoDokumen = document.getElementById('foto_dokumen');
+
+    fileInput.addEventListener('change', function() {
         const file = this.files[0];
+        
         if (file) {
-            // Cek ukuran file (Max 2MB agar lancar)
+            // Check file size (max 2MB)
             if (file.size > 2 * 1024 * 1024) {
-                Swal.fire('File Terlalu Besar', 'Maksimal ukuran foto adalah 2MB', 'error');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'File Terlalu Besar',
+                    text: 'Ukuran file maksimal adalah 2MB. Silakan pilih file lain.',
+                    confirmButtonColor: '#065f46'
+                });
                 this.value = "";
+                resetFileUpload();
                 return;
             }
             
+            // Check file type
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!validTypes.includes(file.type)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Format Tidak Didukung',
+                    text: 'Harap pilih file dengan format JPEG atau PNG.',
+                    confirmButtonColor: '#065f46'
+                });
+                this.value = "";
+                resetFileUpload();
+                return;
+            }
+            
+            // Read and preview
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('foto_dokumen').value = e.target.result;
+                fotoDokumen.value = e.target.result;
+                previewImage.src = e.target.result;
+                previewContainer.classList.add('show');
+                fileUploadArea.classList.add('has-file');
+                fileUploadText.textContent = file.name;
+                fileUploadArea.style.borderColor = '';
             };
             reader.readAsDataURL(file);
         }
     });
 
+    // Drag and drop support
+    fileUploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#10b981';
+        this.style.background = '#f0fdf4';
+    });
+
+    fileUploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        if (!this.classList.contains('has-file')) {
+            this.style.borderColor = '';
+            this.style.background = '';
+        }
+    });
+
+    fileUploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '';
+        this.style.background = '';
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            fileInput.dispatchEvent(new Event('change'));
+        }
+    });
+
+    function resetFileUpload() {
+        fileUploadArea.classList.remove('has-file');
+        previewContainer.classList.remove('show');
+        fileUploadText.textContent = 'Klik untuk memilih foto atau drag & drop';
+        fotoDokumen.value = '';
+    }
+
+    // ===== REAL-TIME VALIDATION =====
+
+    // Validasi untuk NIK (hanya angka)
+    document.querySelectorAll('input[name*="nik_"]').forEach(input => {
+        input.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (this.value.length === 16) {
+                this.style.borderColor = '#10b981';
+            } else if (this.value.length > 0) {
+                this.style.borderColor = '#fbbf24';
+            } else {
+                this.style.borderColor = '';
+            }
+        });
+    });
+
+    // Validasi untuk RT dan RW (hanya angka, max 3 digit)
+    document.querySelectorAll('input[name="rt"], input[name="rw"]').forEach(input => {
+        input.addEventListener('input', function() {
+            // Hanya izinkan angka
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+        
+        // Saat blur, format dengan padding
+        input.addEventListener('blur', function() {
+            if (this.value) {
+                this.value = padRTRW(this.value);
+            }
+        });
+    });
+
+    // Validasi untuk nomor HP
+    document.querySelectorAll('input[type="tel"]').forEach(input => {
+        input.addEventListener('input', function() {
+            // Hanya izinkan angka dan + di awal
+            let val = this.value.replace(/[^0-9+]/g, '');
+            // Hanya satu + di awal yang diperbolehkan
+            if (val.startsWith('+')) {
+                val = '+' + val.substring(1).replace(/\+/g, '');
+            } else {
+                val = val.replace(/\+/g, '');
+            }
+            this.value = val;
+        });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+            const activeStep = document.querySelector('.step.active');
+            const nextBtn = activeStep.querySelector('.btn-next, .btn-submit');
+            if (nextBtn && e.target.tagName !== 'BUTTON') {
+                e.preventDefault();
+                nextBtn.click();
+            }
+        }
+    });
+
+    // ===== FORM SUBMISSION =====
+
     document.getElementById('psbForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Cek kembali field wajib di step terakhir jika ada
-        const inputs = this.querySelectorAll('.step.active input[required]');
+        // Final validation for required fields
+        const allRequiredInputs = this.querySelectorAll('input[required], select[required]');
         let isValid = true;
-        inputs.forEach(i => { if(!i.value) isValid = false; });
+        
+        allRequiredInputs.forEach(input => {
+            if (!input.value.trim()) {
+                isValid = false;
+            }
+        });
+        
+        // Check if foto is uploaded
+        if (!fotoDokumen.value) {
+            isValid = false;
+        }
 
-        if(!isValid) {
-            Swal.fire('Perhatian', 'Harap lengkapi data wajib.', 'warning');
+        if (!isValid) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Data Belum Lengkap',
+                text: 'Harap lengkapi semua data wajib termasuk foto dokumen.',
+                confirmButtonColor: '#065f46'
+            });
             return;
         }
 
+        // === KONFIRMASI SEBELUM KIRIM ===
         Swal.fire({
-            title: 'Sedang Mengirim...',
-            text: 'Harap tidak menutup browser.',
+            icon: 'question',
+            title: 'Konfirmasi Pengiriman',
+            html: `
+                <p style="text-align: left; margin-bottom: 10px;">Apakah Anda yakin data yang diisi sudah benar?</p>
+                <ul style="text-align: left; font-size: 0.9rem; color: #64748b;">
+                    <li>Pastikan semua data sudah terisi dengan benar</li>
+                    <li>Foto dokumen sudah jelas dan terbaca</li>
+                    <li>Nomor HP aktif dan dapat dihubungi</li>
+                </ul>
+            `,
+            showCancelButton: true,
+            confirmButtonColor: '#065f46',
+            cancelButtonColor: '#94a3b8',
+            confirmButtonText: 'Ya, Kirim Sekarang',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Proses pengiriman data
+                submitFormData();
+            }
+        });
+    });
+
+    function submitFormData() {
+        Swal.fire({
+            title: 'Mengirim Data...',
+            text: 'Harap tunggu, jangan tutup halaman ini.',
             allowOutsideClick: false,
-            didOpen: () => Swal.showLoading()
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
         });
 
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
+        const formData = new FormData(document.getElementById('psbForm'));
+        const data = {};
 
-        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
-        .then(r => r.json())
+        // Proses setiap field
+        for (let [key, value] of formData.entries()) {
+            // Format nomor HP (0 -> 62)
+            if (key.startsWith('hp_')) {
+                data[key] = formatPhoneNumber(value);
+            }
+            // Format RT dan RW dengan padding
+            else if (key === 'rt' || key === 'rw') {
+                data[key] = padRTRW(value);
+            }
+            // Field lainnya
+            else {
+                data[key] = value;
+            }
+        }
+
+        // Debug: tampilkan data yang akan dikirim
+        console.log('Data yang akan dikirim:', data);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
         .then(res => {
-            if(res.result === 'success') {
-                Swal.fire('Alhamdulillah!', 'Pendaftaran berhasil dikirim.', 'success')
-                .then(() => location.reload());
+            if (res.result === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Alhamdulillah!',
+                    html: '<strong>Pendaftaran berhasil dikirim!</strong><br><br>Data Anda telah kami terima dan akan segera diproses.',
+                    confirmButtonColor: '#065f46',
+                    confirmButtonText: 'Selesai'
+                }).then(() => {
+                    location.reload();
+                });
             } else {
-                Swal.fire('Error', res.error, 'error');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    text: res.error || 'Gagal mengirim data. Silakan coba lagi.',
+                    confirmButtonColor: '#065f46'
+                });
             }
         })
-        .catch(() => Swal.fire('Error', 'Gagal menghubungi server.', 'error'));
-    });
+        .catch(() => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Koneksi Gagal',
+                text: 'Tidak dapat menghubungi server. Periksa koneksi internet Anda dan coba lagi.',
+                confirmButtonColor: '#065f46'
+            });
+        });
+    }
 </script>
 </body>
 </html>
