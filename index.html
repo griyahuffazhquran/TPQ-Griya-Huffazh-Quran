@@ -16,11 +16,7 @@
             --text-muted: #64748b;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -30,7 +26,6 @@
             overflow-x: hidden;
         }
 
-        /* ===== MAIN CONTAINER ===== */
         #mainPage {
             min-height: 100vh;
             display: flex;
@@ -40,339 +35,125 @@
             overflow: hidden;
         }
 
-        /* Background */
         .landing-bg {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             background: 
                 radial-gradient(ellipse at 20% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 80%, rgba(6, 95, 70, 0.1) 0%, transparent 50%),
                 linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
         }
 
-        /* Pattern Overlay */
         .pattern-overlay {
-            position: absolute;
-            inset: 0;
-            opacity: 0.03;
+            position: absolute; inset: 0; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23065f46' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        /* Floating Shapes */
-        .floating-shapes {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
+        .floating-shapes { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .shape { position: absolute; border-radius: 50%; animation: float 20s ease-in-out infinite; }
+        .shape-1 { width: 300px; height: 300px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 95, 70, 0.1)); top: -100px; left: -100px; }
+        .shape-2 { width: 200px; height: 200px; background: linear-gradient(135deg, rgba(6, 95, 70, 0.15), rgba(16, 185, 129, 0.1)); bottom: 10%; right: -50px; animation-delay: -5s; }
+        .shape-3 { width: 150px; height: 150px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), transparent); top: 20%; right: 10%; animation-delay: -10s; }
 
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            animation: float 20s ease-in-out infinite;
-        }
+        @keyframes float { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-20px, 20px) rotate(-5deg); } }
 
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 95, 70, 0.1));
-            top: -100px;
-            left: -100px;
-            animation-delay: 0s;
-        }
+        .main-content { position: relative; z-index: 10; text-align: center; padding: 2rem; animation: fadeInUp 1s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, rgba(6, 95, 70, 0.15), rgba(16, 185, 129, 0.1));
-            bottom: 10%;
-            right: -50px;
-            animation-delay: -5s;
-        }
-
-        .shape-3 {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), transparent);
-            top: 20%;
-            right: 10%;
-            animation-delay: -10s;
-        }
-
-        .shape-4 {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, rgba(6, 95, 70, 0.1), rgba(16, 185, 129, 0.08));
-            bottom: 20%;
-            left: 15%;
-            animation-delay: -15s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(30px, -30px) rotate(5deg); }
-            50% { transform: translate(-20px, 20px) rotate(-5deg); }
-            75% { transform: translate(20px, 10px) rotate(3deg); }
-        }
-
-        /* Content */
-        .main-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 2rem;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Logo Badge */
+        /* --- CSS UNIFIED LOGO & HEADLINE --- */
         .logo-badge {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--dark-green), var(--soft-green));
-            border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 130px; height: 130px;
+            background: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             margin: 0 auto 2.5rem;
-            box-shadow: 0 20px 40px rgba(6, 95, 70, 0.3);
+            box-shadow: 0 20px 40px rgba(6, 95, 70, 0.25);
             animation: pulse-glow 3s ease-in-out infinite;
+            padding: 8px;
         }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 20px 40px rgba(6, 95, 70, 0.25); } 50% { box-shadow: 0 25px 50px rgba(16, 185, 129, 0.35); } }
+        .logo-badge img { width: 100%; height: 100%; object-fit: contain; }
 
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 20px 40px rgba(6, 95, 70, 0.3); }
-            50% { box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4); }
-        }
-
-        .logo-badge svg {
-            width: 60px;
-            height: 60px;
-            fill: white;
-        }
-
-        /* Typography */
         .main-content h1 {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-weight: 800;
-            color: var(--dark-green);
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            font-size: clamp(1.8rem, 5vw, 3rem); /* Ukuran disamakan */
+            font-weight: 800; color: var(--dark-green);
+            margin-bottom: 0.75rem; letter-spacing: -0.02em; line-height: 1.2;
         }
 
         .main-content .tagline {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-            font-weight: 500;
+            font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--text-muted);
+            margin-bottom: 3rem; max-width: 500px;
+            margin-left: auto; margin-right: auto; line-height: 1.6; font-weight: 500;
         }
+        /* ------------------------------------- */
 
-        /* Maintenance Card */
         .maintenance-card {
-            background: white;
-            border-radius: 24px;
-            padding: 2.5rem 3rem;
-            max-width: 480px;
-            margin: 0 auto;
-            box-shadow: 0 25px 60px rgba(6, 95, 70, 0.12);
-            animation: slideUp 0.8s ease-out 0.3s both;
+            background: white; border-radius: 24px; padding: 2.5rem 3rem; max-width: 480px; margin: 0 auto;
+            box-shadow: 0 25px 60px rgba(6, 95, 70, 0.12); animation: slideUp 0.8s ease-out 0.3s both;
         }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         .maintenance-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            animation: bounce 2s ease-in-out infinite;
+            width: 70px; height: 70px; background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; animation: bounce 2s ease-in-out infinite;
         }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .maintenance-icon svg { width: 35px; height: 35px; color: #d97706; }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
+        .maintenance-card h2 { font-size: 1.35rem; font-weight: 700; color: var(--dark-green); margin-bottom: 0.75rem; }
+        .maintenance-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
-        .maintenance-icon svg {
-            width: 35px;
-            height: 35px;
-            color: #d97706;
-        }
-
-        .maintenance-card h2 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--dark-green);
-            margin-bottom: 0.75rem;
-        }
-
-        .maintenance-card p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Decorative Dots */
-        .dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 1.5rem;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--light-green);
-            animation: dotPulse 1.5s ease-in-out infinite;
-        }
-
+        .dots { display: flex; justify-content: center; gap: 8px; margin-top: 1.5rem; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--light-green); animation: dotPulse 1.5s ease-in-out infinite; }
         .dot:nth-child(1) { animation-delay: 0s; }
         .dot:nth-child(2) { animation-delay: 0.2s; background: var(--soft-green); }
         .dot:nth-child(3) { animation-delay: 0.4s; background: var(--dark-green); }
+        @keyframes dotPulse { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.2); opacity: 1; } }
 
-        @keyframes dotPulse {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
+        .footer { position: absolute; bottom: 2rem; left: 0; right: 0; text-align: center; z-index: 10; }
+        .footer p { font-size: 0.85rem; color: var(--text-muted); opacity: 0.7; }
 
-        /* Footer */
-        .footer {
-            position: absolute;
-            bottom: 2rem;
-            left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .footer p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            opacity: 0.7;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .logo-badge {
-                width: 100px;
-                height: 100px;
-                border-radius: 24px;
-            }
-
-            .logo-badge svg {
-                width: 50px;
-                height: 50px;
-            }
-
-            .maintenance-card {
-                padding: 2rem 1.5rem;
-                margin: 0 1rem;
-            }
-
-            .main-content h1 {
-                font-size: 1.75rem;
-            }
-
-            .main-content .tagline {
-                font-size: 0.95rem;
-                padding: 0 1rem;
-            }
-        }
-
-        /* Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+            .logo-badge { width: 110px; height: 110px; }
+            .main-content h1 { font-size: 1.6rem; }
+            .maintenance-card { padding: 2rem 1.5rem; margin: 0 1rem; }
         }
     </style>
 </head>
 <body>
 
 <div id="mainPage">
-    <!-- Background -->
     <div class="landing-bg"></div>
     <div class="pattern-overlay"></div>
-    
-    <!-- Floating Shapes -->
     <div class="floating-shapes">
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
         <div class="shape shape-3"></div>
-        <div class="shape shape-4"></div>
     </div>
     
-    <!-- Main Content -->
     <div class="main-content">
         <!-- Logo -->
         <div class="logo-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-            </svg>
+            <img src="https://z-cdn-media.chatglm.cn/files/e54661fe-fade-4996-988f-908af22283ed.png?auth_key=1872611942-7ec65354c9ba461d8ca891b5abeb7b7f-0-194372b827afb411b9d7f66d0eb72718" alt="Logo TPQ GHQ">
         </div>
         
-        <!-- Headline -->
         <h1>TPQ GRIYA HUFFAZH QUR'AN</h1>
-        
-        <!-- Tagline -->
         <p class="tagline">Membangun Karakter Generasi Qur'ani yang Mandiri dan Berakhlak Mulia</p>
         
-        <!-- Maintenance Card -->
         <div class="maintenance-card">
             <div class="maintenance-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
             </div>
             <h2>Halaman Ini Masih Dalam Maintenance</h2>
             <p>Saat ini kami sedang melakukan pembaruan untuk memberikan layanan yang lebih baik. Silakan kembali dalam beberapa saat.</p>
-            
             <div class="dots">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
         </div>
     </div>
     
-    <!-- Footer -->
-    <div class="footer">
-        <p>&copy; 2025 TPQ Griya Huffazh Qur'an</p>
-    </div>
+    <div class="footer"><p>&copy; 2025 TPQ Griya Huffazh Qur'an</p></div>
 </div>
 
 </body>
